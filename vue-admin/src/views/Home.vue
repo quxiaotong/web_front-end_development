@@ -1,22 +1,17 @@
 <template>
 	<el-row class="container">
-		<!-- 导航头 -->
 		<el-col :span="24" class="header">
 			<el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
 				{{collapsed?'':sysName}}
 			</el-col>
-
-			<!-- 折叠按钮 -->
-			<!-- <el-col :span="10">
+			<el-col :span="10">
 				<div class="tools" @click.prevent="collapse">
 					<i class="fa fa-align-justify"></i>
 				</div>
-			</el-col> -->
-			<!-- 用户信息 -->
-
+			</el-col>
 			<el-col :span="4" class="userinfo">
 				<el-dropdown trigger="hover">
-					<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar"/>{{sysUserName}}</span>
+					<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" /> {{sysUserName}}</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>我的消息</el-dropdown-item>
 						<el-dropdown-item>设置</el-dropdown-item>
@@ -25,24 +20,21 @@
 				</el-dropdown>
 			</el-col>
 		</el-col>
-		<!-- 主体代码 -->
 		<el-col :span="24" class="main">
-			<!-- 侧边导航菜单 -->
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
+				<!--导航菜单-->
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
 					 unique-opened router v-show="!collapsed">
-					 <!-- 判断“hidden”是否为true来进行侧边栏的导航显示 -->
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-						<el-submenu :index="index+''" :key="item.name" v-if="!item.leaf">
+						<el-submenu :index="index+''" v-if="!item.leaf">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
 							<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
 						</el-submenu>
-						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path" :key="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
+						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
 					</template>
 				</el-menu>
-
 				<!--导航菜单-折叠后-->
-				<!-- <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
+				<ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
 					<li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
 						<template v-if="!item.leaf">
 							<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
@@ -56,12 +48,10 @@
 							</li>
 						</template>
 					</li>
-				</ul> -->
+				</ul>
 			</aside>
-			
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
-					<!-- 面包屑 -->
 					<el-col :span="24" class="breadcrumb-container">
 						<strong class="title">{{$route.name}}</strong>
 						<el-breadcrumb separator="/" class="breadcrumb-inner">
@@ -70,7 +60,6 @@
 							</el-breadcrumb-item>
 						</el-breadcrumb>
 					</el-col>
-					<!-- 组件渲染位置 -->
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
 							<router-view></router-view>
@@ -78,7 +67,6 @@
 					</el-col>
 				</div>
 			</section>
-
 		</el-col>
 	</el-row>
 </template>
@@ -87,7 +75,7 @@
 	export default {
 		data() {
 			return {
-				sysName:'VueAdmin',
+				sysName:'VUEADMIN',
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',
@@ -104,19 +92,16 @@
 			}
 		},
 		methods: {
-			// onSubmit() {
-			// 	console.log('submit!');
-			// },
-			// 导航栏打开关闭操作
+			onSubmit() {
+				console.log('submit!');
+			},
 			handleopen() {
-				// console.log('handleopen');
+				//console.log('handleopen');
 			},
 			handleclose() {
-				// console.log('handleclose');
+				//console.log('handleclose');
 			},
-			// 子导航点击时的选中对象
 			handleselect: function (a, b) {
-				// console.log(a,b);
 			},
 			//退出登录
 			logout: function () {
@@ -129,17 +114,17 @@
 				}).catch(() => {
 
 				});
+
+
 			},
 			//折叠导航栏
-			// collapse:function(){
-			// 	this.collapsed=!this.collapsed;
-			// },
-			// showMenu(i,status){
-			// 	this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-'+i)[0].style.display=status?'block':'none';
-			// }
+			collapse:function(){
+				this.collapsed=!this.collapsed;
+			},
+			showMenu(i,status){
+				this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-'+i)[0].style.display=status?'block':'none';
+			}
 		},
-
-		// 挂载vue渲染时加载用户头像和用户名
 		mounted() {
 			var user = sessionStorage.getItem('user');
 			if (user) {

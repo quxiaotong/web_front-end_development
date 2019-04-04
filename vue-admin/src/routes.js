@@ -59,16 +59,6 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: '',
-        iconCls: 'fa fa-address-card',
-        leaf: true,//只有一个节点
-        children: [
-            { path: '/page7', component: Page6, name: '导航四' }
-        ]
-    },
-    {
-        path: '/',
-        component: Home,
         name: 'Charts',
         iconCls: 'fa fa-bar-chart',
         children: [
